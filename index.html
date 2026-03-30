@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AAAG – Alumni Association of APRS Gandipalem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blue:        #1A3FA0;
+      --blue-dark:   #0F2670;
+      --blue-mid:    #2F5BE0;
+      --blue-light:  #E8EDFB;
+      --orange:      #F26C1B;
+      --orange-light:#FF8C42;
+      --orange-pale: #FEF0E6;
+      --white:       #FFFFFF;
+      --off-white:   #F7F8FC;
+      --text-dark:   #0F172A;
+      --text-mid:    #475569;
+      --text-light:  #94A3B8;
+      --border:      #E2E8F0;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+
+    /* NAVBAR */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 0 2.5rem;
+      height: 68px; display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 1px 12px rgba(26,63,160,0.06);
+    }
+    .nav-wordmark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-badge {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900;
+      color: var(--white); flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .nav-badge::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--orange); }
+    .nav-text { display: flex; flex-direction: column; line-height: 1; }
+    .nav-text .name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue); letter-spacing: 1.5px; }
+    .nav-text .sub { font-size: 0.58rem; color: var(--text-light); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 0.1rem; }
+    .nav-links a { color: var(--text-mid); text-decoration: none; font-size: 0.83rem; font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 6px; transition: all 0.2s; }
+    .nav-links a:hover { color: var(--blue); background: var(--blue-light); }
+    .nav-links a.active { color: var(--blue); font-weight: 600; }
+    .nav-links .nav-cta { background: var(--orange); color: var(--white) !important; font-weight: 600; padding: 0.45rem 1.1rem; border-radius: 8px; margin-left: 0.5rem; }
+    .nav-links .nav-cta:hover { background: var(--orange-light); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(242,108,27,0.3); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--blue); border-radius: 2px; }
+
+    /* HERO */
+    .hero { min-height: 100vh; padding-top: 68px; background: var(--white); display: flex; align-items: center; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; top: 0; right: 0; width: 52%; height: 100%; background: linear-gradient(145deg, var(--blue) 0%, var(--blue-dark) 100%); clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%); z-index: 0; }
+    .hero-bg::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 40%, rgba(242,108,27,0.18), transparent 60%); }
+    .hero-dots { position: absolute; right: 6%; top: 22%; width: 180px; height: 180px; background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1.5px, transparent 1.5px); background-size: 20px 20px; z-index: 1; pointer-events: none; }
+    .hero-content { max-width: 1200px; margin: 0 auto; width: 100%; padding: 5rem 2.5rem; display: flex; align-items: center; gap: 4rem; position: relative; z-index: 2; }
+    .hero-left { flex: 1; }
+    .hero-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-light); border: 1px solid rgba(26,63,160,0.15); padding: 0.35rem 1rem; border-radius: 50px; margin-bottom: 1.5rem; }
+    .hero-pill .dot { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: blink 2s infinite; }
+    .hero-pill span { font-size: 0.72rem; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 900; line-height: 1.1; color: var(--text-dark); margin-bottom: 0.6rem; }
+    .hero-title .accent { color: var(--orange); }
+    .hero-sub { font-size: 0.88rem; font-weight: 600; letter-spacing: 2.5px; color: var(--text-light); text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero-desc { font-size: 1rem; color: var(--text-mid); line-height: 1.75; max-width: 480px; margin-bottom: 0.75rem; }
+    .hero-telugu { font-family: 'Noto Sans Telugu', sans-serif; font-size: 1rem; color: var(--orange); margin-bottom: 2.5rem; font-weight: 600; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: var(--white); font-weight: 700; padding: 0.9rem 1.8rem; border-radius: 10px; text-decoration: none; font-size: 0.9rem; transition: all 0.25s; box-shadow: 0 4px 18px rgba(242,108,27,0.35); }
+    .btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(242,108,27,0.4); }
+    .btn-primary svg { transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(3px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--blue); font-weight: 600; padding: 0.9rem 1.8rem; border-radius: 10px; text-decoration: none; font-size: 0.9rem; border: 2px solid var(--blue); transition: all 0.25s; }
+    .btn-outline:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
+    .hero-right { flex-shrink: 0; width: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; animation: slideIn 0.7s 0.2s both; }
+    @keyframes slideIn { from{opacity:0;transform:translateX(30px);} to{opacity:1;transform:translateX(0);} }
+    .stat-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); border-radius: 14px; padding: 1.4rem 1rem; text-align: center; backdrop-filter: blur(6px); transition: all 0.2s; }
+    .stat-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-3px); }
+    .stat-card .num { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .stat-card .num span { color: var(--orange-light); }
+    .stat-card .lbl { font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 0.35rem; }
+
+    /* SECTIONS */
+    section { padding: 5.5rem 2.5rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .s-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 0.5rem; }
+    .s-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: var(--blue-dark); line-height: 1.2; margin-bottom: 1rem; }
+    .s-desc { font-size: 0.97rem; color: var(--text-mid); line-height: 1.75; max-width: 580px; }
+    .blue-bar { width: 44px; height: 4px; background: var(--blue); border-radius: 2px; margin-bottom: 1.25rem; }
+
+    /* MISSION */
+    #mission { background: var(--off-white); }
+    .mission-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3.5rem; }
+    .pillars { display: flex; flex-direction: column; gap: 1rem; }
+    .pillar { display: flex; gap: 1rem; align-items: flex-start; background: var(--white); border-radius: 12px; padding: 1.25rem; border: 1px solid var(--border); transition: all 0.2s; }
+    .pillar:hover { border-color: var(--orange); box-shadow: 0 4px 18px rgba(242,108,27,0.1); transform: translateX(4px); }
+    .pillar-icon { width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .pillar h4 { font-size: 0.92rem; font-weight: 600; color: var(--blue-dark); margin-bottom: 0.25rem; }
+    .pillar p { font-size: 0.82rem; color: var(--text-mid); line-height: 1.55; }
+    .mission-quote-box { background: var(--blue); border-radius: 20px; padding: 3rem 2.5rem; position: relative; overflow: hidden; }
+    .mission-quote-box::before { content: '"'; position: absolute; top: -30px; right: 20px; font-family: 'Playfair Display', serif; font-size: 12rem; color: rgba(255,255,255,0.06); line-height: 1; pointer-events: none; }
+    .mission-quote-box::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--orange); }
+    .mission-quote-box blockquote { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-style: italic; color: var(--white); line-height: 1.65; position: relative; z-index: 1; }
+    .q-telugu { font-family: 'Noto Sans Telugu', sans-serif; font-size: 1rem; color: var(--orange-light); margin-top: 1.25rem; display: block; font-style: normal; }
+    .q-src { margin-top: 1.5rem; font-size: 0.75rem; color: rgba(255,255,255,0.4); letter-spacing: 1.5px; text-transform: uppercase; }
+
+    /* WHAT WE DO */
+    #what-we-do { background: var(--white); }
+    .cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; transition: all 0.25s; position: relative; overflow: hidden; }
+    .card-top-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--blue), var(--orange)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(26,63,160,0.1); border-color: transparent; }
+    .card:hover .card-top-bar { transform: scaleX(1); }
+    .card-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.1rem; }
+    .card h3 { font-size: 1rem; font-weight: 700; color: var(--blue-dark); margin-bottom: 0.5rem; }
+    .card p { font-size: 0.845rem; color: var(--text-mid); line-height: 1.65; }
+
+    /* EVENTS */
+    #events { background: var(--off-white); }
+    .events-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 1rem; }
+    .event-row { display: flex; gap: 1.5rem; align-items: center; background: var(--white); border-radius: 14px; padding: 1.3rem 1.6rem; border: 1px solid var(--border); transition: all 0.2s; }
+    .event-row:hover { border-color: var(--blue); box-shadow: 0 4px 18px rgba(26,63,160,0.08); }
+    .event-date-box { flex-shrink: 0; width: 56px; text-align: center; background: var(--blue); border-radius: 10px; padding: 0.5rem 0; }
+    .event-date-box .day { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .event-date-box .mon { font-size: 0.62rem; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+    .event-info { flex: 1; }
+    .event-info h4 { font-size: 0.93rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.2rem; }
+    .event-info p { font-size: 0.8rem; color: var(--text-light); }
+    .etag { flex-shrink: 0; padding: 0.28rem 0.75rem; border-radius: 50px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .etag-open { background: var(--orange-pale); color: var(--orange); }
+    .etag-soon { background: var(--blue-light); color: var(--blue); }
+    .section-link { margin-top: 2.5rem; }
+
+    /* SPOTLIGHT */
+    #spotlight { background: var(--white); }
+    .spotlight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .alumni-card { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); transition: all 0.25s; }
+    .alumni-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,63,160,0.1); border-color: transparent; }
+    .ac-head { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%); padding: 1.8rem; text-align: center; position: relative; }
+    .ac-head::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--orange); }
+    .ac-avatar { width: 62px; height: 62px; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin: 0 auto 0.7rem; border: 2px solid rgba(242,108,27,0.5); }
+    .ac-head h4 { font-size: 0.93rem; font-weight: 600; color: var(--white); }
+    .ac-batch { display: inline-block; margin-top: 0.3rem; padding: 0.18rem 0.6rem; border-radius: 50px; background: rgba(242,108,27,0.2); border: 1px solid rgba(242,108,27,0.35); font-size: 0.68rem; color: var(--orange-light); }
+    .ac-body { padding: 1.25rem 1.4rem; }
+    .ac-role { font-size: 0.8rem; font-weight: 700; color: var(--blue); margin-bottom: 0.4rem; }
+    .ac-quote { font-size: 0.8rem; color: var(--text-mid); line-height: 1.6; font-style: italic; }
+
+    /* JOIN CTA */
+    #join { background: var(--blue); text-align: center; position: relative; overflow: hidden; }
+    #join::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(242,108,27,0.15), transparent 65%); pointer-events: none; }
+    #join .s-title { color: var(--white); }
+    #join .s-desc { color: rgba(255,255,255,0.65); margin: 0 auto 2.5rem; text-align: center; }
+    .join-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--blue); font-weight: 700; padding: 0.9rem 1.8rem; border-radius: 10px; text-decoration: none; font-size: 0.9rem; transition: all 0.25s; box-shadow: 0 4px 18px rgba(0,0,0,0.15); }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: rgba(255,255,255,0.85); font-weight: 600; padding: 0.9rem 1.8rem; border-radius: 10px; text-decoration: none; font-size: 0.9rem; border: 2px solid rgba(255,255,255,0.3); transition: all 0.25s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.6); }
+
+    /* FOOTER */
+    footer { background: var(--blue-dark); padding: 3.5rem 2.5rem 1.5rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .fb-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); letter-spacing: 2px; margin-bottom: 0.6rem; }
+    .fb-name span { color: var(--orange-light); }
+    footer p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 280px; }
+    .fb-telugu { font-family: 'Noto Sans Telugu', sans-serif; color: var(--orange-light); font-size: 0.85rem; margin-top: 0.75rem; display: block; }
+    .fc h5 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); margin-bottom: 1rem; font-weight: 700; }
+    .fc a { display: block; color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.82rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .fc a:hover { color: var(--orange-light); }
+    .footer-bottom { max-width: 1100px; margin: 1.25rem auto 0; display: flex; justify-content: space-between; font-size: 0.73rem; color: rgba(255,255,255,0.25); }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE MENU */
+    .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 1.25rem 2rem; z-index: 998; flex-direction: column; gap: 0.25rem; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--text-mid); text-decoration: none; font-size: 0.93rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-weight: 500; }
+    .mobile-menu a:last-child { border: none; color: var(--orange); font-weight: 700; margin-top: 0.25rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .hero-content { flex-direction: column; padding-bottom: 5rem; }
+      .hero-bg { width: 100%; height: 42%; top: auto; bottom: 0; clip-path: polygon(0 28%, 100% 0%, 100% 100%, 0% 100%); }
+      .hero-right { width: 100%; }
+      .mission-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .cards-grid { grid-template-columns: 1fr 1fr; }
+      .spotlight-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; } .hamburger { display: flex; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .spotlight-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+      .hero-right { grid-template-columns: 1fr 1fr; }
+      .hero-btns { flex-direction: column; }
+      .event-row { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-wordmark">
+    <div class="nav-badge">AAAG</div>
+    <div class="nav-text">
+      <span class="name">AAAG</span>
+      <span class="sub">APRS Gandipalem Alumni</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="committee.html">Committee</a>
+    <a href="directory.html">Directory</a>
+    <a href="programs.html">Programs & Events</a>
+    <a href="contact.html">Contact</a>
+    <a href="directory.html" class="nav-cta">Join Directory</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="committee.html">Committee</a>
+  <a href="directory.html">Directory</a>
+  <a href="programs.html">Programs & Events</a>
+  <a href="contact.html">Contact</a>
+  <a href="directory.html">Join Directory →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="hero-left fade-in">
+      <div class="hero-pill"><span class="dot"></span><span>Est. 1986 · Batch 1986–2024</span></div>
+      <h1 class="hero-title">Alumni Association<br/>of <span class="accent">APRS</span><br/>Gandipalem</h1>
+      <p class="hero-sub">AAAG · Connecting Generations</p>
+      <p class="hero-desc">A platform that brings together alumni of APRS Gandipalem to share knowledge, experiences, and opportunities — guiding, supporting, and inspiring fellow alumni and students.</p>
+      <p class="hero-telugu">మన అనుభవం… మరొకరికి మార్గం.</p>
+      <div class="hero-btns">
+        <a href="directory.html" class="btn-primary">Join Alumni Directory <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="programs.html" class="btn-outline">Explore Programs</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="stat-card"><div class="num">39<span>+</span></div><div class="lbl">Batches</div></div>
+      <div class="stat-card"><div class="num">1986</div><div class="lbl">First Batch</div></div>
+      <div class="stat-card"><div class="num">1K<span>+</span></div><div class="lbl">Alumni Network</div></div>
+      <div class="stat-card"><div class="num">4<span>+</span></div><div class="lbl">Active Programs</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="section-inner">
+    <p class="s-label fade-in">Our Purpose</p>
+    <div class="blue-bar"></div>
+    <h2 class="s-title fade-in">Why AAAG Exists</h2>
+    <p class="s-desc fade-in">We believe every alumnus carries the power to light another's path. AAAG is the bridge between where we came from and where we're going.</p>
+    <div class="mission-layout">
+      <div class="pillars fade-in">
+        <div class="pillar"><div class="pillar-icon">🤝</div><div><h4>Connect</h4><p>Reunite alumni across all batches — from 1986 to today — into a living, active network.</p></div></div>
+        <div class="pillar"><div class="pillar-icon">💡</div><div><h4>Share Knowledge</h4><p>Share career experiences, professional journeys, and life lessons with the broader community.</p></div></div>
+        <div class="pillar"><div class="pillar-icon">🌱</div><div><h4>Create Impact</h4><p>Run mentorship programs, scholarship initiatives, and community-driven events for students.</p></div></div>
+        <div class="pillar"><div class="pillar-icon">🎓</div><div><h4>Guide Juniors</h4><p>Be the guide that we ourselves needed — helping current students find direction and opportunity.</p></div></div>
+      </div>
+      <div class="mission-quote-box fade-in">
+        <blockquote>"Our experiences can light the path for many."<span class="q-telugu">మన అనుభవం… మరొకరికి మార్గం.</span></blockquote>
+        <p class="q-src">— AAAG Vision Statement</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section id="what-we-do">
+  <div class="section-inner">
+    <p class="s-label fade-in">Our Initiatives</p>
+    <div class="blue-bar"></div>
+    <h2 class="s-title fade-in">What We Do</h2>
+    <p class="s-desc fade-in">Meaningful programs built by alumni, for alumni and the students who follow.</p>
+    <div class="cards-grid">
+      <div class="card fade-in"><div class="card-top-bar"></div><div class="card-icon">📋</div><h3>Alumni Directory</h3><p>Find and connect with fellow alumni. Search by batch, profession, or location.</p></div>
+      <div class="card fade-in"><div class="card-top-bar"></div><div class="card-icon">🧭</div><h3>Mentorship Program</h3><p>Senior alumni guiding juniors in career choices, higher education, and professional growth.</p></div>
+      <div class="card fade-in"><div class="card-top-bar"></div><div class="card-icon">📅</div><h3>Events & Reunions</h3><p>Annual meetups, batch reunions, webinars, and community events to keep the spirit alive.</p></div>
+      <div class="card fade-in"><div class="card-top-bar"></div><div class="card-icon">🏆</div><h3>Alumni Spotlights</h3><p>Celebrating achievements — from civil services to entrepreneurship — as inspiration for all.</p></div>
+      <div class="card fade-in"><div class="card-top-bar"></div><div class="card-icon">📚</div><h3>Scholarship Support</h3><p>Alumni-funded scholarships to support deserving students in their academic journeys.</p></div>
+      <div class="card fade-in"><div class="card-top-bar"></div><div class="card-icon">💬</div><h3>Community Forum</h3><p>A space for discussions, opportunities, advice, and collaboration across all batches.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="section-inner">
+    <p class="s-label fade-in">What's Happening</p>
+    <div class="blue-bar"></div>
+    <h2 class="s-title fade-in">Upcoming Events</h2>
+    <p class="s-desc fade-in">Stay connected with what's happening in the AAAG community.</p>
+    <div class="events-list fade-in">
+      <div class="event-row">
+        <div class="event-date-box"><div class="day">15</div><div class="mon">Aug</div></div>
+        <div class="event-info"><h4>Annual Alumni Reunion 2025 — Gandipalem</h4><p>All batch alumni welcome. Registration open now.</p></div>
+        <span class="etag etag-open">Registration Open</span>
+      </div>
+      <div class="event-row">
+        <div class="event-date-box"><div class="day">20</div><div class="mon">Jul</div></div>
+        <div class="event-info"><h4>Mentorship Webinar: Career Paths After APRS</h4><p>Online session with senior alumni across professions.</p></div>
+        <span class="etag etag-soon">Upcoming</span>
+      </div>
+      <div class="event-row">
+        <div class="event-date-box"><div class="day">01</div><div class="mon">Jun</div></div>
+        <div class="event-info"><h4>Scholarship Fund Drive 2025</h4><p>Alumni contributions to support deserving students.</p></div>
+        <span class="etag etag-soon">Coming Soon</span>
+      </div>
+    </div>
+    <div class="section-link fade-in">
+      <a href="programs.html" class="btn-primary" style="display:inline-flex;">View All Programs & Events <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT -->
+<section id="spotlight">
+  <div class="section-inner">
+    <p class="s-label fade-in">Our Community</p>
+    <div class="blue-bar"></div>
+    <h2 class="s-title fade-in">Alumni Spotlight</h2>
+    <p class="s-desc fade-in">Proud members of APRS Gandipalem making a difference across fields.</p>
+    <div class="spotlight-grid">
+      <div class="alumni-card fade-in"><div class="ac-head"><div class="ac-avatar">RK</div><h4>Ravi Kumar</h4><span class="ac-batch">Batch of 1992</span></div><div class="ac-body"><p class="ac-role">IAS Officer · Govt. of Telangana</p><p class="ac-quote">"APRS Gandipalem gave me the discipline to dream big and the foundation to achieve it."</p></div></div>
+      <div class="alumni-card fade-in"><div class="ac-head"><div class="ac-avatar">SP</div><h4>Sunitha Prasad</h4><span class="ac-batch">Batch of 2001</span></div><div class="ac-body"><p class="ac-role">Software Engineer · Hyderabad</p><p class="ac-quote">"The values we built here are more valuable than any degree I have earned since."</p></div></div>
+      <div class="alumni-card fade-in"><div class="ac-head"><div class="ac-avatar">MR</div><h4>Mahesh Reddy</h4><span class="ac-batch">Batch of 2008</span></div><div class="ac-body"><p class="ac-role">Doctor · AIIMS Hyderabad</p><p class="ac-quote">"This school didn't just educate me — it shaped who I am as a person and as a doctor."</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN CTA -->
+<section id="join">
+  <div class="section-inner fade-in">
+    <p class="s-label" style="text-align:center; color:rgba(242,108,27,0.8);">Be Part of the Story</p>
+    <div class="blue-bar" style="background:var(--orange); margin:0.6rem auto 1.5rem;"></div>
+    <h2 class="s-title">Join the AAAG Network</h2>
+    <p class="s-desc">Whether you passed out in 1986 or 2024 — you belong here. Add yourself to the alumni directory, attend events, or volunteer as a mentor.</p>
+    <div class="join-btns">
+      <a href="directory.html" class="btn-white">Join Alumni Directory <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="contact.html" class="btn-ghost">Contact Committee</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="fb-name">AA<span>AG</span></div>
+      <p>Alumni Association of AP Residential School, Gandipalem. Connecting alumni across all batches since 1986.</p>
+      <span class="fb-telugu">మన అనుభవం… మరొకరికి మార్గం.</span>
+    </div>
+    <div class="fc">
+      <h5>Navigate</h5>
+      <a href="index.html">Home</a>
+      <a href="about.html">About AAAG</a>
+      <a href="committee.html">Committee</a>
+      <a href="directory.html">Alumni Directory</a>
+      <a href="programs.html">Programs & Events</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="fc">
+      <h5>Community</h5>
+      <a href="directory.html">Join the Directory</a>
+      <a href="programs.html">Mentorship Program</a>
+      <a href="programs.html">Scholarship Fund</a>
+      <a href="contact.html">Volunteer with Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 AAAG – Alumni Association of APRS Gandipalem. All rights reserved.</span>
+    <span>Batch 1986 – 2024</span>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
